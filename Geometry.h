@@ -127,6 +127,13 @@ class Geometry : public Node
 		/// <param name="elements">The elements for the geometry</param>
 		void setElements(std::vector<GLushort> elements);
 
+		/// <summary>
+		/// Initilizes the shaders with a given shader program
+		/// </summary>
+		/// <param name="program">The shader program</param>
+		/// <returns> A flag if the shaders initilized correctly or not </returns>
+		bool initShaders(GLint program);
+
 	private:
 		std::vector<glm::vec4> m_vertices;
 		std::vector<glm::vec3> m_normals;
@@ -149,13 +156,6 @@ class Geometry : public Node
 		bool m_useVAO;
 		bool m_hasInitilizedShaders;
 		bool m_hasUploaded;
-
-		/// <summary>
-		/// Initilizes the shaders with a given shader program
-		/// </summary>
-		/// <param name="program">The shader program</param>
-		/// <returns> A flag if the shaders initilized correctly or not </returns>
-		bool initShaders(GLint program);
 
 		/// <summary>
 		/// Uploads the geometry uniforms

@@ -145,14 +145,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(CMAKE_COMMAND) -E cmake_progress_start /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master/CMakeFiles /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master/examples/lab1//CMakeFiles/progress.marks
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/lab1/all
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(CMAKE_COMMAND) -E cmake_progress_start /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master/CMakeFiles /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master/examples/lab3//CMakeFiles/progress.marks
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/lab3/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/lab1/clean
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/lab3/clean
 .PHONY : clean
 
 # The main clean target
@@ -162,12 +162,12 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/lab1/preinstall
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/lab3/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/lab1/preinstall
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/lab3/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
@@ -176,19 +176,19 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-examples/lab1/CMakeFiles/lab1.dir/rule:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/lab1/CMakeFiles/lab1.dir/rule
-.PHONY : examples/lab1/CMakeFiles/lab1.dir/rule
+examples/lab3/CMakeFiles/lab3.dir/rule:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/lab3/CMakeFiles/lab3.dir/rule
+.PHONY : examples/lab3/CMakeFiles/lab3.dir/rule
 
 # Convenience name for target.
-lab1: examples/lab1/CMakeFiles/lab1.dir/rule
+lab3: examples/lab3/CMakeFiles/lab3.dir/rule
 
-.PHONY : lab1
+.PHONY : lab3
 
 # fast build rule for target.
-lab1/fast:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/build
-.PHONY : lab1/fast
+lab3/fast:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/build
+.PHONY : lab3/fast
 
 Application.o: Application.cpp.o
 
@@ -196,7 +196,7 @@ Application.o: Application.cpp.o
 
 # target to build an object file
 Application.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Application.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Application.cpp.o
 .PHONY : Application.cpp.o
 
 Application.i: Application.cpp.i
@@ -205,7 +205,7 @@ Application.i: Application.cpp.i
 
 # target to preprocess a source file
 Application.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Application.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Application.cpp.i
 .PHONY : Application.cpp.i
 
 Application.s: Application.cpp.s
@@ -214,7 +214,7 @@ Application.s: Application.cpp.s
 
 # target to generate assembly for a file
 Application.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Application.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Application.cpp.s
 .PHONY : Application.cpp.s
 
 Camera.o: Camera.cpp.o
@@ -223,7 +223,7 @@ Camera.o: Camera.cpp.o
 
 # target to build an object file
 Camera.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Camera.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Camera.cpp.o
 .PHONY : Camera.cpp.o
 
 Camera.i: Camera.cpp.i
@@ -232,7 +232,7 @@ Camera.i: Camera.cpp.i
 
 # target to preprocess a source file
 Camera.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Camera.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Camera.cpp.i
 .PHONY : Camera.cpp.i
 
 Camera.s: Camera.cpp.s
@@ -241,8 +241,62 @@ Camera.s: Camera.cpp.s
 
 # target to generate assembly for a file
 Camera.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Camera.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Camera.cpp.s
 .PHONY : Camera.cpp.s
+
+DepthCameraSetPositionCallback.o: DepthCameraSetPositionCallback.cpp.o
+
+.PHONY : DepthCameraSetPositionCallback.o
+
+# target to build an object file
+DepthCameraSetPositionCallback.cpp.o:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/DepthCameraSetPositionCallback.cpp.o
+.PHONY : DepthCameraSetPositionCallback.cpp.o
+
+DepthCameraSetPositionCallback.i: DepthCameraSetPositionCallback.cpp.i
+
+.PHONY : DepthCameraSetPositionCallback.i
+
+# target to preprocess a source file
+DepthCameraSetPositionCallback.cpp.i:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/DepthCameraSetPositionCallback.cpp.i
+.PHONY : DepthCameraSetPositionCallback.cpp.i
+
+DepthCameraSetPositionCallback.s: DepthCameraSetPositionCallback.cpp.s
+
+.PHONY : DepthCameraSetPositionCallback.s
+
+# target to generate assembly for a file
+DepthCameraSetPositionCallback.cpp.s:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/DepthCameraSetPositionCallback.cpp.s
+.PHONY : DepthCameraSetPositionCallback.cpp.s
+
+DrawCameraStatus.o: DrawCameraStatus.cpp.o
+
+.PHONY : DrawCameraStatus.o
+
+# target to build an object file
+DrawCameraStatus.cpp.o:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/DrawCameraStatus.cpp.o
+.PHONY : DrawCameraStatus.cpp.o
+
+DrawCameraStatus.i: DrawCameraStatus.cpp.i
+
+.PHONY : DrawCameraStatus.i
+
+# target to preprocess a source file
+DrawCameraStatus.cpp.i:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/DrawCameraStatus.cpp.i
+.PHONY : DrawCameraStatus.cpp.i
+
+DrawCameraStatus.s: DrawCameraStatus.cpp.s
+
+.PHONY : DrawCameraStatus.s
+
+# target to generate assembly for a file
+DrawCameraStatus.cpp.s:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/DrawCameraStatus.cpp.s
+.PHONY : DrawCameraStatus.cpp.s
 
 FPSCounter.o: FPSCounter.cpp.o
 
@@ -250,7 +304,7 @@ FPSCounter.o: FPSCounter.cpp.o
 
 # target to build an object file
 FPSCounter.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/FPSCounter.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/FPSCounter.cpp.o
 .PHONY : FPSCounter.cpp.o
 
 FPSCounter.i: FPSCounter.cpp.i
@@ -259,7 +313,7 @@ FPSCounter.i: FPSCounter.cpp.i
 
 # target to preprocess a source file
 FPSCounter.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/FPSCounter.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/FPSCounter.cpp.i
 .PHONY : FPSCounter.cpp.i
 
 FPSCounter.s: FPSCounter.cpp.s
@@ -268,8 +322,35 @@ FPSCounter.s: FPSCounter.cpp.s
 
 # target to generate assembly for a file
 FPSCounter.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/FPSCounter.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/FPSCounter.cpp.s
 .PHONY : FPSCounter.cpp.s
+
+GPUParticles.o: GPUParticles.cpp.o
+
+.PHONY : GPUParticles.o
+
+# target to build an object file
+GPUParticles.cpp.o:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/GPUParticles.cpp.o
+.PHONY : GPUParticles.cpp.o
+
+GPUParticles.i: GPUParticles.cpp.i
+
+.PHONY : GPUParticles.i
+
+# target to preprocess a source file
+GPUParticles.cpp.i:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/GPUParticles.cpp.i
+.PHONY : GPUParticles.cpp.i
+
+GPUParticles.s: GPUParticles.cpp.s
+
+.PHONY : GPUParticles.s
+
+# target to generate assembly for a file
+GPUParticles.cpp.s:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/GPUParticles.cpp.s
+.PHONY : GPUParticles.cpp.s
 
 Geometry.o: Geometry.cpp.o
 
@@ -277,7 +358,7 @@ Geometry.o: Geometry.cpp.o
 
 # target to build an object file
 Geometry.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Geometry.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Geometry.cpp.o
 .PHONY : Geometry.cpp.o
 
 Geometry.i: Geometry.cpp.i
@@ -286,7 +367,7 @@ Geometry.i: Geometry.cpp.i
 
 # target to preprocess a source file
 Geometry.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Geometry.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Geometry.cpp.i
 .PHONY : Geometry.cpp.i
 
 Geometry.s: Geometry.cpp.s
@@ -295,7 +376,7 @@ Geometry.s: Geometry.cpp.s
 
 # target to generate assembly for a file
 Geometry.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Geometry.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Geometry.cpp.s
 .PHONY : Geometry.cpp.s
 
 Group.o: Group.cpp.o
@@ -304,7 +385,7 @@ Group.o: Group.cpp.o
 
 # target to build an object file
 Group.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Group.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Group.cpp.o
 .PHONY : Group.cpp.o
 
 Group.i: Group.cpp.i
@@ -313,7 +394,7 @@ Group.i: Group.cpp.i
 
 # target to preprocess a source file
 Group.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Group.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Group.cpp.i
 .PHONY : Group.cpp.i
 
 Group.s: Group.cpp.s
@@ -322,7 +403,7 @@ Group.s: Group.cpp.s
 
 # target to generate assembly for a file
 Group.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Group.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Group.cpp.s
 .PHONY : Group.cpp.s
 
 LOD.o: LOD.cpp.o
@@ -331,7 +412,7 @@ LOD.o: LOD.cpp.o
 
 # target to build an object file
 LOD.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/LOD.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/LOD.cpp.o
 .PHONY : LOD.cpp.o
 
 LOD.i: LOD.cpp.i
@@ -340,7 +421,7 @@ LOD.i: LOD.cpp.i
 
 # target to preprocess a source file
 LOD.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/LOD.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/LOD.cpp.i
 .PHONY : LOD.cpp.i
 
 LOD.s: LOD.cpp.s
@@ -349,7 +430,7 @@ LOD.s: LOD.cpp.s
 
 # target to generate assembly for a file
 LOD.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/LOD.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/LOD.cpp.s
 .PHONY : LOD.cpp.s
 
 Light.o: Light.cpp.o
@@ -358,7 +439,7 @@ Light.o: Light.cpp.o
 
 # target to build an object file
 Light.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Light.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Light.cpp.o
 .PHONY : Light.cpp.o
 
 Light.i: Light.cpp.i
@@ -367,7 +448,7 @@ Light.i: Light.cpp.i
 
 # target to preprocess a source file
 Light.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Light.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Light.cpp.i
 .PHONY : Light.cpp.i
 
 Light.s: Light.cpp.s
@@ -376,7 +457,7 @@ Light.s: Light.cpp.s
 
 # target to generate assembly for a file
 Light.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Light.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Light.cpp.s
 .PHONY : Light.cpp.s
 
 LightMoveCallback.o: LightMoveCallback.cpp.o
@@ -385,7 +466,7 @@ LightMoveCallback.o: LightMoveCallback.cpp.o
 
 # target to build an object file
 LightMoveCallback.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/LightMoveCallback.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/LightMoveCallback.cpp.o
 .PHONY : LightMoveCallback.cpp.o
 
 LightMoveCallback.i: LightMoveCallback.cpp.i
@@ -394,7 +475,7 @@ LightMoveCallback.i: LightMoveCallback.cpp.i
 
 # target to preprocess a source file
 LightMoveCallback.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/LightMoveCallback.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/LightMoveCallback.cpp.i
 .PHONY : LightMoveCallback.cpp.i
 
 LightMoveCallback.s: LightMoveCallback.cpp.s
@@ -403,7 +484,7 @@ LightMoveCallback.s: LightMoveCallback.cpp.s
 
 # target to generate assembly for a file
 LightMoveCallback.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/LightMoveCallback.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/LightMoveCallback.cpp.s
 .PHONY : LightMoveCallback.cpp.s
 
 Loader.o: Loader.cpp.o
@@ -412,7 +493,7 @@ Loader.o: Loader.cpp.o
 
 # target to build an object file
 Loader.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Loader.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Loader.cpp.o
 .PHONY : Loader.cpp.o
 
 Loader.i: Loader.cpp.i
@@ -421,7 +502,7 @@ Loader.i: Loader.cpp.i
 
 # target to preprocess a source file
 Loader.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Loader.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Loader.cpp.i
 .PHONY : Loader.cpp.i
 
 Loader.s: Loader.cpp.s
@@ -430,7 +511,7 @@ Loader.s: Loader.cpp.s
 
 # target to generate assembly for a file
 Loader.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Loader.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Loader.cpp.s
 .PHONY : Loader.cpp.s
 
 Material.o: Material.cpp.o
@@ -439,7 +520,7 @@ Material.o: Material.cpp.o
 
 # target to build an object file
 Material.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Material.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Material.cpp.o
 .PHONY : Material.cpp.o
 
 Material.i: Material.cpp.i
@@ -448,7 +529,7 @@ Material.i: Material.cpp.i
 
 # target to preprocess a source file
 Material.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Material.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Material.cpp.i
 .PHONY : Material.cpp.i
 
 Material.s: Material.cpp.s
@@ -457,7 +538,7 @@ Material.s: Material.cpp.s
 
 # target to generate assembly for a file
 Material.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Material.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Material.cpp.s
 .PHONY : Material.cpp.s
 
 Node.o: Node.cpp.o
@@ -466,7 +547,7 @@ Node.o: Node.cpp.o
 
 # target to build an object file
 Node.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Node.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Node.cpp.o
 .PHONY : Node.cpp.o
 
 Node.i: Node.cpp.i
@@ -475,7 +556,7 @@ Node.i: Node.cpp.i
 
 # target to preprocess a source file
 Node.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Node.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Node.cpp.i
 .PHONY : Node.cpp.i
 
 Node.s: Node.cpp.s
@@ -484,8 +565,89 @@ Node.s: Node.cpp.s
 
 # target to generate assembly for a file
 Node.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Node.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Node.cpp.s
 .PHONY : Node.cpp.s
+
+OrthographicCamera.o: OrthographicCamera.cpp.o
+
+.PHONY : OrthographicCamera.o
+
+# target to build an object file
+OrthographicCamera.cpp.o:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/OrthographicCamera.cpp.o
+.PHONY : OrthographicCamera.cpp.o
+
+OrthographicCamera.i: OrthographicCamera.cpp.i
+
+.PHONY : OrthographicCamera.i
+
+# target to preprocess a source file
+OrthographicCamera.cpp.i:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/OrthographicCamera.cpp.i
+.PHONY : OrthographicCamera.cpp.i
+
+OrthographicCamera.s: OrthographicCamera.cpp.s
+
+.PHONY : OrthographicCamera.s
+
+# target to generate assembly for a file
+OrthographicCamera.cpp.s:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/OrthographicCamera.cpp.s
+.PHONY : OrthographicCamera.cpp.s
+
+PerspectiveCamera.o: PerspectiveCamera.cpp.o
+
+.PHONY : PerspectiveCamera.o
+
+# target to build an object file
+PerspectiveCamera.cpp.o:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/PerspectiveCamera.cpp.o
+.PHONY : PerspectiveCamera.cpp.o
+
+PerspectiveCamera.i: PerspectiveCamera.cpp.i
+
+.PHONY : PerspectiveCamera.i
+
+# target to preprocess a source file
+PerspectiveCamera.cpp.i:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/PerspectiveCamera.cpp.i
+.PHONY : PerspectiveCamera.cpp.i
+
+PerspectiveCamera.s: PerspectiveCamera.cpp.s
+
+.PHONY : PerspectiveCamera.s
+
+# target to generate assembly for a file
+PerspectiveCamera.cpp.s:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/PerspectiveCamera.cpp.s
+.PHONY : PerspectiveCamera.cpp.s
+
+RenderToTexture.o: RenderToTexture.cpp.o
+
+.PHONY : RenderToTexture.o
+
+# target to build an object file
+RenderToTexture.cpp.o:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/RenderToTexture.cpp.o
+.PHONY : RenderToTexture.cpp.o
+
+RenderToTexture.i: RenderToTexture.cpp.i
+
+.PHONY : RenderToTexture.i
+
+# target to preprocess a source file
+RenderToTexture.cpp.i:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/RenderToTexture.cpp.i
+.PHONY : RenderToTexture.cpp.i
+
+RenderToTexture.s: RenderToTexture.cpp.s
+
+.PHONY : RenderToTexture.s
+
+# target to generate assembly for a file
+RenderToTexture.cpp.s:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/RenderToTexture.cpp.s
+.PHONY : RenderToTexture.cpp.s
 
 RenderVisitor.o: RenderVisitor.cpp.o
 
@@ -493,7 +655,7 @@ RenderVisitor.o: RenderVisitor.cpp.o
 
 # target to build an object file
 RenderVisitor.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/RenderVisitor.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/RenderVisitor.cpp.o
 .PHONY : RenderVisitor.cpp.o
 
 RenderVisitor.i: RenderVisitor.cpp.i
@@ -502,7 +664,7 @@ RenderVisitor.i: RenderVisitor.cpp.i
 
 # target to preprocess a source file
 RenderVisitor.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/RenderVisitor.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/RenderVisitor.cpp.i
 .PHONY : RenderVisitor.cpp.i
 
 RenderVisitor.s: RenderVisitor.cpp.s
@@ -511,7 +673,7 @@ RenderVisitor.s: RenderVisitor.cpp.s
 
 # target to generate assembly for a file
 RenderVisitor.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/RenderVisitor.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/RenderVisitor.cpp.s
 .PHONY : RenderVisitor.cpp.s
 
 RotateCallback.o: RotateCallback.cpp.o
@@ -520,7 +682,7 @@ RotateCallback.o: RotateCallback.cpp.o
 
 # target to build an object file
 RotateCallback.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/RotateCallback.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/RotateCallback.cpp.o
 .PHONY : RotateCallback.cpp.o
 
 RotateCallback.i: RotateCallback.cpp.i
@@ -529,7 +691,7 @@ RotateCallback.i: RotateCallback.cpp.i
 
 # target to preprocess a source file
 RotateCallback.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/RotateCallback.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/RotateCallback.cpp.i
 .PHONY : RotateCallback.cpp.i
 
 RotateCallback.s: RotateCallback.cpp.s
@@ -538,8 +700,62 @@ RotateCallback.s: RotateCallback.cpp.s
 
 # target to generate assembly for a file
 RotateCallback.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/RotateCallback.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/RotateCallback.cpp.s
 .PHONY : RotateCallback.cpp.s
+
+Shadowmap.o: Shadowmap.cpp.o
+
+.PHONY : Shadowmap.o
+
+# target to build an object file
+Shadowmap.cpp.o:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Shadowmap.cpp.o
+.PHONY : Shadowmap.cpp.o
+
+Shadowmap.i: Shadowmap.cpp.i
+
+.PHONY : Shadowmap.i
+
+# target to preprocess a source file
+Shadowmap.cpp.i:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Shadowmap.cpp.i
+.PHONY : Shadowmap.cpp.i
+
+Shadowmap.s: Shadowmap.cpp.s
+
+.PHONY : Shadowmap.s
+
+# target to generate assembly for a file
+Shadowmap.cpp.s:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Shadowmap.cpp.s
+.PHONY : Shadowmap.cpp.s
+
+Skybox.o: Skybox.cpp.o
+
+.PHONY : Skybox.o
+
+# target to build an object file
+Skybox.cpp.o:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Skybox.cpp.o
+.PHONY : Skybox.cpp.o
+
+Skybox.i: Skybox.cpp.i
+
+.PHONY : Skybox.i
+
+# target to preprocess a source file
+Skybox.cpp.i:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Skybox.cpp.i
+.PHONY : Skybox.cpp.i
+
+Skybox.s: Skybox.cpp.s
+
+.PHONY : Skybox.s
+
+# target to generate assembly for a file
+Skybox.cpp.s:
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Skybox.cpp.s
+.PHONY : Skybox.cpp.s
 
 SortedGroup.o: SortedGroup.cpp.o
 
@@ -547,7 +763,7 @@ SortedGroup.o: SortedGroup.cpp.o
 
 # target to build an object file
 SortedGroup.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/SortedGroup.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/SortedGroup.cpp.o
 .PHONY : SortedGroup.cpp.o
 
 SortedGroup.i: SortedGroup.cpp.i
@@ -556,7 +772,7 @@ SortedGroup.i: SortedGroup.cpp.i
 
 # target to preprocess a source file
 SortedGroup.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/SortedGroup.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/SortedGroup.cpp.i
 .PHONY : SortedGroup.cpp.i
 
 SortedGroup.s: SortedGroup.cpp.s
@@ -565,7 +781,7 @@ SortedGroup.s: SortedGroup.cpp.s
 
 # target to generate assembly for a file
 SortedGroup.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/SortedGroup.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/SortedGroup.cpp.s
 .PHONY : SortedGroup.cpp.s
 
 State.o: State.cpp.o
@@ -574,7 +790,7 @@ State.o: State.cpp.o
 
 # target to build an object file
 State.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/State.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/State.cpp.o
 .PHONY : State.cpp.o
 
 State.i: State.cpp.i
@@ -583,7 +799,7 @@ State.i: State.cpp.i
 
 # target to preprocess a source file
 State.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/State.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/State.cpp.i
 .PHONY : State.cpp.i
 
 State.s: State.cpp.s
@@ -592,7 +808,7 @@ State.s: State.cpp.s
 
 # target to generate assembly for a file
 State.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/State.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/State.cpp.s
 .PHONY : State.cpp.s
 
 Texture.o: Texture.cpp.o
@@ -601,7 +817,7 @@ Texture.o: Texture.cpp.o
 
 # target to build an object file
 Texture.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Texture.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Texture.cpp.o
 .PHONY : Texture.cpp.o
 
 Texture.i: Texture.cpp.i
@@ -610,7 +826,7 @@ Texture.i: Texture.cpp.i
 
 # target to preprocess a source file
 Texture.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Texture.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Texture.cpp.i
 .PHONY : Texture.cpp.i
 
 Texture.s: Texture.cpp.s
@@ -619,7 +835,7 @@ Texture.s: Texture.cpp.s
 
 # target to generate assembly for a file
 Texture.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Texture.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Texture.cpp.s
 .PHONY : Texture.cpp.s
 
 Transform.o: Transform.cpp.o
@@ -628,7 +844,7 @@ Transform.o: Transform.cpp.o
 
 # target to build an object file
 Transform.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Transform.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Transform.cpp.o
 .PHONY : Transform.cpp.o
 
 Transform.i: Transform.cpp.i
@@ -637,7 +853,7 @@ Transform.i: Transform.cpp.i
 
 # target to preprocess a source file
 Transform.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Transform.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Transform.cpp.i
 .PHONY : Transform.cpp.i
 
 Transform.s: Transform.cpp.s
@@ -646,7 +862,7 @@ Transform.s: Transform.cpp.s
 
 # target to generate assembly for a file
 Transform.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/Transform.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/Transform.cpp.s
 .PHONY : Transform.cpp.s
 
 UpdateVisitor.o: UpdateVisitor.cpp.o
@@ -655,7 +871,7 @@ UpdateVisitor.o: UpdateVisitor.cpp.o
 
 # target to build an object file
 UpdateVisitor.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/UpdateVisitor.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/UpdateVisitor.cpp.o
 .PHONY : UpdateVisitor.cpp.o
 
 UpdateVisitor.i: UpdateVisitor.cpp.i
@@ -664,7 +880,7 @@ UpdateVisitor.i: UpdateVisitor.cpp.i
 
 # target to preprocess a source file
 UpdateVisitor.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/UpdateVisitor.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/UpdateVisitor.cpp.i
 .PHONY : UpdateVisitor.cpp.i
 
 UpdateVisitor.s: UpdateVisitor.cpp.s
@@ -673,7 +889,7 @@ UpdateVisitor.s: UpdateVisitor.cpp.s
 
 # target to generate assembly for a file
 UpdateVisitor.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/UpdateVisitor.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/UpdateVisitor.cpp.s
 .PHONY : UpdateVisitor.cpp.s
 
 main.o: main.cpp.o
@@ -682,7 +898,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/main.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -691,7 +907,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/main.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -700,7 +916,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/main.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 shader_utils.o: shader_utils.cpp.o
@@ -709,7 +925,7 @@ shader_utils.o: shader_utils.cpp.o
 
 # target to build an object file
 shader_utils.cpp.o:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/shader_utils.cpp.o
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/shader_utils.cpp.o
 .PHONY : shader_utils.cpp.o
 
 shader_utils.i: shader_utils.cpp.i
@@ -718,7 +934,7 @@ shader_utils.i: shader_utils.cpp.i
 
 # target to preprocess a source file
 shader_utils.cpp.i:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/shader_utils.cpp.i
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/shader_utils.cpp.i
 .PHONY : shader_utils.cpp.i
 
 shader_utils.s: shader_utils.cpp.s
@@ -727,7 +943,7 @@ shader_utils.s: shader_utils.cpp.s
 
 # target to generate assembly for a file
 shader_utils.cpp.s:
-	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab1/CMakeFiles/lab1.dir/build.make examples/lab1/CMakeFiles/lab1.dir/shader_utils.cpp.s
+	cd /home/dv19/dv19jbm/Advanced_Computer_Graphics/5dv180-master && $(MAKE) $(MAKESILENT) -f examples/lab3/CMakeFiles/lab3.dir/build.make examples/lab3/CMakeFiles/lab3.dir/shader_utils.cpp.s
 .PHONY : shader_utils.cpp.s
 
 # Help Target
@@ -742,16 +958,25 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... lab1"
+	@echo "... lab3"
 	@echo "... Application.o"
 	@echo "... Application.i"
 	@echo "... Application.s"
 	@echo "... Camera.o"
 	@echo "... Camera.i"
 	@echo "... Camera.s"
+	@echo "... DepthCameraSetPositionCallback.o"
+	@echo "... DepthCameraSetPositionCallback.i"
+	@echo "... DepthCameraSetPositionCallback.s"
+	@echo "... DrawCameraStatus.o"
+	@echo "... DrawCameraStatus.i"
+	@echo "... DrawCameraStatus.s"
 	@echo "... FPSCounter.o"
 	@echo "... FPSCounter.i"
 	@echo "... FPSCounter.s"
+	@echo "... GPUParticles.o"
+	@echo "... GPUParticles.i"
+	@echo "... GPUParticles.s"
 	@echo "... Geometry.o"
 	@echo "... Geometry.i"
 	@echo "... Geometry.s"
@@ -776,12 +1001,27 @@ help:
 	@echo "... Node.o"
 	@echo "... Node.i"
 	@echo "... Node.s"
+	@echo "... OrthographicCamera.o"
+	@echo "... OrthographicCamera.i"
+	@echo "... OrthographicCamera.s"
+	@echo "... PerspectiveCamera.o"
+	@echo "... PerspectiveCamera.i"
+	@echo "... PerspectiveCamera.s"
+	@echo "... RenderToTexture.o"
+	@echo "... RenderToTexture.i"
+	@echo "... RenderToTexture.s"
 	@echo "... RenderVisitor.o"
 	@echo "... RenderVisitor.i"
 	@echo "... RenderVisitor.s"
 	@echo "... RotateCallback.o"
 	@echo "... RotateCallback.i"
 	@echo "... RotateCallback.s"
+	@echo "... Shadowmap.o"
+	@echo "... Shadowmap.i"
+	@echo "... Shadowmap.s"
+	@echo "... Skybox.o"
+	@echo "... Skybox.i"
+	@echo "... Skybox.s"
 	@echo "... SortedGroup.o"
 	@echo "... SortedGroup.i"
 	@echo "... SortedGroup.s"

@@ -9,10 +9,13 @@ RenderVisitor::RenderVisitor()
 {
 }
 
-void RenderVisitor::resetState(GLuint program)
+int noMore = 0;
+
+void RenderVisitor::resetState()
 {
 	m_stateStack = {};
-	m_stateStack.push(std::shared_ptr<State>(new State(program)));
+	m_stateStack.push(std::shared_ptr<State>(new State()));
+	noMore++;
 }
 
 void RenderVisitor::visit(Group& g)
@@ -28,7 +31,7 @@ void RenderVisitor::visit(Group& g)
 		m_stateStack.push(s);
 	}
 
-    g.accept(*this);
+	g.accept(*this);
 
 	if(pop)
 	{
@@ -58,7 +61,7 @@ void RenderVisitor::visit(Transform& g)
 		m_stateStack.push(s);
 	}
 
-    g.acceptChildren(*this);
+	g.acceptChildren(*this);
 
 	if(pop)
 	{
@@ -71,6 +74,7 @@ void RenderVisitor::visit(Transform& g)
 void RenderVisitor::visit(Geometry &g)
 {
 	bool pop = false;
+
 	if(g.hasState())
 	{
 		std::shared_ptr<State> s(new State());
@@ -80,29 +84,18 @@ void RenderVisitor::visit(Geometry &g)
 		pop = true;
 	}
 
-	/*
-	if(!g.isInitilized() || m_stateStack.top()->isProgramsMerged())
-	{
-		if(!g.init(m_stateStack.top()->getProgram()))
-		{
-			std::cerr << "Could not initilize object" << std::endl;
-		}
-	}
-	*/
+	g.initShaders(m_stateStack.top()->getProgram());
 
 	m_stateStack.top()->apply();
 
-	if(!m_stateStack.top()->isProgramsMerged())
+	if(!m_transformationStack.empty())
 	{
-		if(!m_transformationStack.empty())
-		{
-			glm::mat4 transform = m_transformationStack.top();
+		glm::mat4 transform = m_transformationStack.top();
 
-			g.apply(transform);
-		}
-
-		g.render();
+		g.apply(transform);
 	}
+
+	g.render();
 
 	if(pop)
 	{

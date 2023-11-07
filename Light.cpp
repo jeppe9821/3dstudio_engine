@@ -27,8 +27,8 @@ void Light::apply(GLuint program, size_t idx)
 
 	if (loc == -1)
 	{
-		std::cerr << "Could not bind uniform << " << uniform_name << std::endl;
-		return;
+		//std::cerr << "Could not bind uniform << " << uniform_name << std::endl;
+		//return;
 	}
 
 	glUniform1i(loc, m_enabled);
@@ -37,7 +37,7 @@ void Light::apply(GLuint program, size_t idx)
 	uniform_name = prefix + std::string(NAME);  \
 	loc = glGetUniformLocation(program, uniform_name.c_str()); \
 	if (loc == -1) { \
-		std::cerr << "Could not bind uniform << " << uniform_name << std::endl; \
+		/*std::cerr << "Could not bind uniform << " << uniform_name << std::endl;*/ \
 		return; \
 			} \
 	glUniform4fv(loc, 1, glm::value_ptr(VALUE));

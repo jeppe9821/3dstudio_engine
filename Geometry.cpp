@@ -42,18 +42,9 @@ Geometry::~Geometry()
 
 bool Geometry::init(GLint program)
 {
-	if(!initShaders(program))
-	{
-		return false;
-	}
-
-	m_hasInitilizedShaders = true;
-
+	bool flag = initShaders(program);
 	upload();
-
-	m_hasUploaded = true;
-
-	return true;
+	return flag;
 }
 
 void Geometry::apply(glm::mat4 obj2World)
@@ -80,7 +71,7 @@ BoundingBox Geometry::calculateBoundingBox()
 
 bool Geometry::isInitilized()
 {
-	return m_hasInitilizedShaders && m_hasUploaded;
+	return m_hasUploaded;
 }
 
 void Geometry::addVertex(float x, float y, float z, float w)
@@ -133,7 +124,6 @@ void Geometry::render()
 	if (m_useVAO)
 	{
 		glBindVertexArray(m_vao);
-		CHECK_GL_ERROR_LINE_FILE();
 	}
 
 	if (m_normals.size() == 0)
@@ -153,8 +143,6 @@ void Geometry::render()
 		std::cerr << "Geometry has not been uploaded. Cannot render" << std::endl;
 		return;
 	}
-
-	CHECK_GL_ERROR_LINE_FILE();
 
 	if (!m_useVAO)
 	{
@@ -181,19 +169,19 @@ void Geometry::render()
 	else
 	{
 		glEnableVertexAttribArray(m_attribute_v_coord);
-		CHECK_GL_ERROR_LINE_FILE();
+		//CHECK_GL_ERROR_LINE_FILE();
 		glEnableVertexAttribArray(m_attribute_v_normal);
-		CHECK_GL_ERROR_LINE_FILE();
+		//CHECK_GL_ERROR_LINE_FILE();
 
 		if (m_vbo_texCoords != 0)
 		{
 			glEnableVertexAttribArray(m_attribute_v_texCoords);
 		}
 
-		CHECK_GL_ERROR_LINE_FILE();
+		//CHECK_GL_ERROR_LINE_FILE();
 	}
 
-	CHECK_GL_ERROR_LINE_FILE();
+	//CHECK_GL_ERROR_LINE_FILE();
 
 	/* Push each element in buffer_vertices to the vertex shader */
 	if (this->m_ibo_elements != 0)
@@ -205,7 +193,7 @@ void Geometry::render()
 
 		GLuint size = GLuint(this->m_elements.size());
 		glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_SHORT, 0);
-		CHECK_GL_ERROR_LINE_FILE();
+		//CHECK_GL_ERROR_LINE_FILE();
 	}
 	else
 	{
@@ -231,6 +219,8 @@ void Geometry::render()
 	{
 		glBindVertexArray(0);
 	}
+
+	glDisable(GL_BLEND);
 }
 
 void Geometry::draw_bbox()
@@ -322,14 +312,16 @@ void Geometry::draw_bbox()
 
 bool Geometry::initShaders(GLint program)
 {
+	m_hasInitilizedShaders = true;
+
 	const char* attribute_name;
 	attribute_name = "vertex.position";
 	m_attribute_v_coord = glGetAttribLocation(program, attribute_name);
 
 	if (m_attribute_v_coord == -1)
 	{
-		fprintf(stderr, "Could not bind attribute %s\n", attribute_name);
-		return false;
+		//fprintf(stderr, "Could not bind attribute %s\n", attribute_name);
+		//return false;
 	}
 
 	attribute_name = "vertex.normal";
@@ -337,8 +329,8 @@ bool Geometry::initShaders(GLint program)
 
 	if (m_attribute_v_normal == -1)
 	{
-		fprintf(stderr, "Could not bind attribute %s\n", attribute_name);
-		return false;
+		//fprintf(stderr, "Could not bind attribute %s\n", attribute_name);
+		//return false;
 	}
 
 	attribute_name = "vertex.texCoord";
@@ -346,8 +338,8 @@ bool Geometry::initShaders(GLint program)
 
 	if (m_attribute_v_texCoords == -1)
 	{
-		fprintf(stderr, "Could not bind attribute %s\n", attribute_name);
-		return false;
+		//fprintf(stderr, "Could not bind attribute %s\n", attribute_name);
+		//return false;
 	}
 
 	const char* uniform_name;
@@ -356,8 +348,8 @@ bool Geometry::initShaders(GLint program)
 
 	if (m_uniform_m == -1)
 	{
-		fprintf(stderr, "Could not bind uniform %s\n", uniform_name);
-		return 0;
+		//fprintf(stderr, "Could not bind uniform %s\n", uniform_name);
+		//return 0;
 	}
 
 	uniform_name = "m_3x3_inv_transp";
@@ -365,8 +357,8 @@ bool Geometry::initShaders(GLint program)
 
 	if (m_uniform_m_3x3_inv_transp == -1)
 	{
-		fprintf(stderr, "Could not bind uniform %s\n", uniform_name);
-		return false;
+		//fprintf(stderr, "Could not bind uniform %s\n", uniform_name);
+		//return false;
 	}
 
 	return true;
@@ -374,13 +366,15 @@ bool Geometry::initShaders(GLint program)
 
 void Geometry::upload()
 {
+	m_hasUploaded = true;
+
 	if (m_useVAO)
 	{
 		// Create a Vertex Array Object that will handle all VBO:s of this Geometry
 		glGenVertexArrays(1, &m_vao);
-		CHECK_GL_ERROR_LINE_FILE();
+		//CHECK_GL_ERROR_LINE_FILE();
 		glBindVertexArray(m_vao);
-		CHECK_GL_ERROR_LINE_FILE();
+		//CHECK_GL_ERROR_LINE_FILE();
 	}
 
 	if (this->m_vertices.size() > 0)
@@ -389,7 +383,7 @@ void Geometry::upload()
 		glBindBuffer(GL_ARRAY_BUFFER, this->m_vbo_vertices);
 		glBufferData(GL_ARRAY_BUFFER, this->m_vertices.size() * sizeof(this->m_vertices[0]),
 			this->m_vertices.data(), GL_STATIC_DRAW);
-		CHECK_GL_ERROR_LINE_FILE();
+		//CHECK_GL_ERROR_LINE_FILE();
 	}
 
 	if (this->m_normals.size() > 0)
@@ -397,7 +391,7 @@ void Geometry::upload()
 		glGenBuffers(1, &this->m_vbo_normals);
 		glBindBuffer(GL_ARRAY_BUFFER, this->m_vbo_normals);
 		glBufferData(GL_ARRAY_BUFFER, this->m_normals.size() * sizeof(this->m_normals[0]),this->m_normals.data(), GL_STATIC_DRAW);
-		CHECK_GL_ERROR_LINE_FILE();
+		//CHECK_GL_ERROR_LINE_FILE();
 	}
 
 	if (this->m_texCoords.size() > 0)
@@ -405,7 +399,7 @@ void Geometry::upload()
 		glGenBuffers(1, &this->m_vbo_texCoords);
 		glBindBuffer(GL_ARRAY_BUFFER, this->m_vbo_texCoords);
 		glBufferData(GL_ARRAY_BUFFER, this->m_texCoords.size() * sizeof(this->m_texCoords[0]),this->m_texCoords.data(), GL_STATIC_DRAW);
-		CHECK_GL_ERROR_LINE_FILE();
+		//CHECK_GL_ERROR_LINE_FILE();
 	}
 
 	if (m_useVAO)
@@ -427,6 +421,7 @@ void Geometry::upload()
 		glBindBuffer(GL_ARRAY_BUFFER, m_vbo_texCoords);
 		glVertexAttribPointer(m_attribute_v_texCoords,2,GL_FLOAT,GL_FALSE,0,0);
 		glDisableVertexAttribArray(m_attribute_v_texCoords);
+		//CHECK_GL_ERROR_LINE_FILE();
 	}
 
 	if (this->m_elements.size() > 0)
@@ -434,16 +429,17 @@ void Geometry::upload()
 		glGenBuffers(1, &this->m_ibo_elements);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->m_ibo_elements);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->m_elements.size() * sizeof(this->m_elements[0]),this->m_elements.data(), GL_STATIC_DRAW);
+		//CHECK_GL_ERROR_LINE_FILE();
 	}
 
-	CHECK_GL_ERROR_LINE_FILE();
+	//CHECK_GL_ERROR_LINE_FILE();
 
 	if (m_useVAO)
 	{
 		// Now release VAO
 		glEnableVertexAttribArray(0);  // Disable our Vertex Array Object
 		glBindVertexArray(0); // Disable our Vertex Buffer Object
-		CHECK_GL_ERROR_LINE_FILE();
+		//CHECK_GL_ERROR_LINE_FILE();
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 }

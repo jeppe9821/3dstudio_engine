@@ -18,12 +18,21 @@
 #include "LOD.h"
 #include "LightMoveCallback.h"
 #include "SortedGroup.h"
+#include "DepthCameraSetPositionCallback.h"
+#include "DrawCameraStatus.h"
+#include "Skybox.h"
+#include "glm/ext.hpp"
+#include <cstdlib>
 
 Application::Application(unsigned int width, unsigned height)
 	: m_screenSize(width, height)
 {
-	m_camera = std::shared_ptr<Camera>(new Camera);
+	m_fpsCamera = std::shared_ptr<PerspectiveCamera>(new PerspectiveCamera);
+
+	m_camera = m_fpsCamera;
+
   	m_fpsCounter = std::make_shared<FPSCounter>();
+	m_drawCameraStatus = std::make_shared<DrawCameraStatus>();
 }
 
 bool Application::initResources(const std::string& model_filename, const std::string& vshader_filename, std::string& fshader_filename)
@@ -34,28 +43,74 @@ bool Application::initResources(const std::string& model_filename, const std::st
 
 	m_program = glCreateProgram();
 	m_toonProgram = glCreateProgram();
+	m_depthProgram = glCreateProgram();
+	m_skyboxProgram = glCreateProgram();
+	m_billboardProgram = glCreateProgram();
+	m_gpuComputeProgram = glCreateProgram();
+	m_gpuProgram = glCreateProgram();
 
 	m_renderVisitor = std::shared_ptr<RenderVisitor>(new RenderVisitor());
 	m_updateVisitor = std::shared_ptr<UpdateVisitor>(new UpdateVisitor());
 
+	m_skybox = std::shared_ptr<Skybox>(new Skybox());
+	m_gpuParticles = std::shared_ptr<GPUParticles>(new GPUParticles(1 << 21)); //2 million particles, bitshift gives us a nice number that is raised by 3 by (1 << 7).
+																			   //Other good numbers to put here are (1 << 15), (1 << 9). Using a number that can't be raised by 3 will result in certian artifacts such as
+																			   //certain particles not moving.
+
+	m_renderParticles = false;
+
 	if (!initShaders(&m_program, vshader_filename, fshader_filename))
 	{
+		std::cout << "Could not initilize phong program" << std::endl;
 		return false;
 	}
 
 	if (!initShaders(&m_toonProgram, "shaders/toon-shading.vert.glsl", "shaders/toon-shading.frag.glsl"))
 	{
+		std::cout << "Could not initilize toon program" << std::endl;
 		return false;
 	}
 
-	m_camera->init(m_program);
-	m_camera->setScreenSize(m_screenSize);
+	if(!initShaders(&m_depthProgram, "shaders/depth-shading.vert.glsl", "shaders/depth-shading.frag.glsl"))
+	{
+		std::cout << "Could not initilize depth program" << std::endl;
+		return false;
+	}
+
+	if(!initShaders(&m_skyboxProgram, "shaders/skybox-shading.vert.glsl", "shaders/skybox-shading.frag.glsl"))
+	{
+		std::cout << "Could not initilize skybox program" << std::endl;
+		return false;
+	}
+
+	if(!initShaders(&m_billboardProgram, "shaders/billboard-shading.vert.glsl", "shaders/billboard-shading.frag.glsl"))
+	{
+		std::cout << "Could not initilize billboard program" << std::endl;
+		return false;
+	}
+
+	if(!initGpuShaders(&m_gpuProgram, "shaders/gpu-particles/gpu.vert.glsl", "shaders/gpu-particles/gpu.frag.glsl", "shaders/gpu-particles/gpu.geo.glsl"))
+	{
+		std::cout << "Could not initilize gpu default program" << std::endl;
+		return false;
+	}
+
+	if(!initComputeShader(&m_gpuComputeProgram, "shaders/gpu-particles/gpu.comp.glsl"))
+	{
+		std::cout << "Could not initilize GPU compute program" << std::endl;
+		return false;
+	}
+
+	m_fpsCamera->init(m_program);
+	m_fpsCamera->setScreenSize(m_screenSize);
+
+	m_shadowmap = std::shared_ptr<Shadowmap>(new Shadowmap(m_depthProgram));
+	m_shadowmap->init(m_screenSize);
 
 	std::string ext = vr::FileSystem::getFileExtension(model_filename);
 	std::shared_ptr<Obj> obj;
 
-	std::shared_ptr<State> defaultState = std::shared_ptr<State>(new State());
-	std::shared_ptr<State> defaultToonState = std::shared_ptr<State>(new State());
+	std::shared_ptr<State> defaultState = std::shared_ptr<State>(new State(m_program));
 
 	m_rootNode = std::shared_ptr<Group>(new Group(defaultState));
 
@@ -78,7 +133,7 @@ bool Application::initResources(const std::string& model_filename, const std::st
 		for(int i = 0; i < scene->objects.size(); i++)
 		{
 			std::shared_ptr<Obj> obj = scene->objects[i];
-			std::shared_ptr<Transform> n = parseObj(obj, m_program);
+			std::shared_ptr<Transform> n = parseObj(obj);
 			m_rootNode->addChild(n);
 		}
 
@@ -98,20 +153,26 @@ bool Application::initResources(const std::string& model_filename, const std::st
 	light1->setSpecular(glm::vec4(1, 1, 1, 1));
 	light1->setPosition(glm::vec4(0.0, 200.0f, 0.0f, 0.0));
 
-	std::shared_ptr<Transform> lightTransform = parseObj(loadObj("models/Sun/13913_Sun_v2_l3.obj"), m_program);
-	lightTransform->setInitialTransform(glm::mat4(1));
-	lightTransform->scale(glm::vec3(0.1f, 0.1f, 0.1f));
-	m_rootNode->addChild(lightTransform);
+	std::shared_ptr<DepthCameraSetPositionCallback> callback = std::shared_ptr<DepthCameraSetPositionCallback>(new DepthCameraSetPositionCallback(light1, m_shadowmap->getDepthCamera()));
+	m_rootNode->addUpdateCallback(callback);
 
-	m_lightMoveCallback = std::shared_ptr<LightMoveCallback>(new LightMoveCallback(light1, lightTransform));
+	std::shared_ptr<Transform> lightTransform = parseObj(loadObj("models/Sun/13913_Sun_v2_l3.obj"));
+	lightTransform->setInitialTransform(glm::mat4(1));
+	//m_rootNode->addChild(lightTransform);
+
+	m_lightMoveCallback = std::shared_ptr<LightMoveCallback>(new LightMoveCallback(light1, lightTransform, m_camera));
 
 	m_rootNode->getState()->add(light1);
 	m_rootNode->addUpdateCallback(m_lightMoveCallback);
 
+	m_gpuParticles->init(m_gpuProgram);
+
+	initView(m_camera);
+
 	return 1;
 }
 
-void Application::initView()
+void Application::initView(std::shared_ptr<Camera> camera)
 {
 	BoundingBox box = m_rootNode->calculateBoundingBox();
 	float radius = box.getRadius();
@@ -122,13 +183,13 @@ void Application::initView()
 
 	std::shared_ptr<Light> light = m_rootNode->getState()->getLights().front();
 	glm::vec4 position;
-	position = glm::vec4(eye + glm::vec3(3, 2, 0), 1);
+	position = glm::vec4(eye + glm::vec3(3, 2, 100), 0);
 	light->setPosition(position);
 
-	m_camera->set(eye, direction, glm::vec3(0.0, 1.0, 0.0));
-	m_camera->setNearFar(glm::vec2(0.1, distance * 20));
-	m_camera->setSceneScale(0.01f * radius);
-	m_camera->setFov(90);
+	camera->set(eye, direction, glm::vec3(0.0, 1.0, 0.0));
+	camera->setNearFar(glm::vec2(0.1, 1e3f));
+	camera->setSceneScale(0.01f * radius);
+	camera->setFov(90);
 
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
@@ -139,64 +200,100 @@ void Application::initView()
 
 void Application::update(GLFWwindow* window)
 {
-	//Animate the multi textured object
-
-	std::vector<GLuint> programs;
-	programs.push_back(m_program);
-	programs.push_back(m_toonProgram);
-
-	glClearColor(0.45f, 0.45f, 0.45f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	for(int i = 0; i < 2; i++)
+	m_updateVisitor->visit(*m_rootNode);
+
+	//Render skybox
+	m_skybox->render(m_skyboxProgram, m_camera);
+
+	//Apply sintime for animation on multi textured objects
+	glUniform1f(glGetUniformLocation(m_program, "sinTime"), glm::sin(glfwGetTime()));
+
+	//Apply shadowmap
+	if(m_renderShadowmap)
 	{
-		glUseProgram(programs[i]);
-
-		glUniform1f(glGetUniformLocation(m_program, "sinTime"), glm::sin(glfwGetTime()));
-
-		m_camera->init(programs[i]);
-		m_camera->apply(programs[i]);
-
-		glUseProgram(0);
-
-		m_updateVisitor->visit(*m_rootNode);
-
-		//render
-
-		//We have to traverse the tree twice as an optimization in order to only run the objects with the program we want to render. However,
-		//this has a fatal flaw, because this will make it so that two objects of different shader programs will not be able to be related to each other
-		//on a transform level, unless you add the transform to both roots. The only solution to this is to ensure that the camera extends "Node".
-		//This would make it easier to initilize and apply the camera when the program is changed in the middle of a tree. But atleast, this works and it's sortof optimized
-		if(i == 0)
-		{
-			m_renderVisitor->resetState(m_program);
-			m_renderVisitor->visit(*m_rootNode);
-		}
-		else if(i == 1)
-		{
-			m_renderVisitor->resetState(m_toonProgram);
-			m_renderVisitor->visit(*m_rootNode);
-		}
+		std::shared_ptr<Texture> renderedShadowmap = m_shadowmap->render(m_program, m_camera, m_rootNode);
+		renderedShadowmap->bind();
+		render(m_camera, m_program);
+		renderedShadowmap->unbind();
 	}
+	else
+	{
+		render(m_camera, m_program);
+	}
+
+	//Render toon without shadows
+	render(m_camera, m_toonProgram);
+
+	//Render billboard
+	render(m_camera, m_billboardProgram);
+
+	//Render FPS counter
 	m_fpsCounter->render(window);
+
+	//Render camera status
+	m_drawCameraStatus->render(window, m_lightMoveCallback);
+
+	std::shared_ptr<Light> light = m_rootNode->getState()->getLights().front();
+	m_camera->init(m_program);
+	m_camera->apply(m_program);
+	m_gpuParticles->setActive(m_renderParticles);
+	m_gpuParticles->render((glm::vec3(light->getPosition() * glm::vec4(15.0f, 15.0f, 15.0f, 1.0f))), m_camera, m_gpuProgram, m_gpuComputeProgram);
 }
 
 void Application::processInput(GLFWwindow* window)
 {
-	m_camera->processInput(window);
+	if(m_wait)
+	{
+		m_tick++;
+		if(m_tick > 60)
+		{
+			m_tick = 0;
+			m_wait = false;
+		}
+	}
+	else
+	{
+		if (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS)
+		{
+			m_shadowmap->setEnabled(false);
+			m_renderShadowmap = !m_renderShadowmap;
+			m_wait = true;
+		}
+		if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS)
+		{
+			m_wait = true;
+			m_renderParticles = !m_renderParticles;
+		}
+	}
+
+	m_fpsCamera->processInput(window);
 	m_lightMoveCallback->processInput(window);
 }
 
 void Application::reloadScene()
 {
 	initResources(m_loadedFilename, m_loadedVShader, m_loadedFShader);
-	initView();
+	initView(m_fpsCamera);
 }
 
 void Application::setScreenSize(unsigned int width, unsigned int height)
 {
 	m_camera->setScreenSize(glm::uvec2(width, height));
 	glViewport(0, 0, width, height);
+}
+
+void Application::render(std::shared_ptr<Camera> camera, GLuint program)
+{
+	glUseProgram(program);
+	camera->init(program);
+	camera->apply(program);
+	glUseProgram(0);
+
+	m_renderVisitor->resetState();
+	m_renderVisitor->visit(*m_rootNode);
 }
 
 bool Application::initShaders(GLuint *program, const std::string& vshader_filename, const std::string& fshader_filename)
@@ -233,7 +330,84 @@ bool Application::initShaders(GLuint *program, const std::string& vshader_filena
 	return true;
 }
 
-std::shared_ptr<Transform> Application::parseObj(std::shared_ptr<Obj> obj, GLuint program)
+bool Application::initComputeShader(GLuint *program, const std::string& filename)
+{
+	GLint link_ok = GL_FALSE;
+	GLint validate_ok = GL_FALSE;
+
+	GLuint cs;
+
+	cs = vr::loadShader("shaders/gpu-particles/gpu.comp.glsl", GL_COMPUTE_SHADER);
+
+	glAttachShader(*program, cs);
+	glLinkProgram(*program);
+
+	glGetProgramiv(*program, GL_LINK_STATUS, &link_ok);
+
+	if (!link_ok)
+	{
+		fprintf(stderr, "initComputeShader_glLinkProgram:");
+		vr::printCompilationError(*program);
+		return false;
+	}
+
+	glValidateProgram(*program);
+	glGetProgramiv(*program, GL_VALIDATE_STATUS, &validate_ok);
+
+	if (!validate_ok)
+	{
+		fprintf(stderr, "initComputeShader_glValidateProgram:");
+		vr::printCompilationError(*program);
+		return false;
+	}
+
+	return true;
+}
+
+bool Application::initGpuShaders(GLuint *program, const std::string& vshader_filename, const std::string& fshader_filename, const std::string& gshader_filename)
+{
+	/* Compile and link shaders */
+	GLint link_ok = GL_FALSE;
+	GLint validate_ok = GL_FALSE;
+	GLuint vs, fs, gs;
+
+	vs = vr::loadShader(vshader_filename, GL_VERTEX_SHADER);
+	gs = vr::loadShader(gshader_filename, GL_GEOMETRY_SHADER);
+	fs = vr::loadShader(fshader_filename, GL_FRAGMENT_SHADER);
+
+	glAttachShader(*program, vs);
+	glAttachShader(*program, gs);
+
+	glProgramParameteriEXT(*program, GL_GEOMETRY_INPUT_TYPE_EXT, GL_POINTS);
+	glProgramParameteriEXT(*program, GL_GEOMETRY_OUTPUT_TYPE_EXT, GL_TRIANGLE_STRIP);
+	glProgramParameteriEXT(*program, GL_GEOMETRY_VERTICES_OUT_EXT, 4);
+
+	glAttachShader(*program, fs);
+	glLinkProgram(*program);
+
+	glGetProgramiv(*program, GL_LINK_STATUS, &link_ok);
+
+	if (!link_ok)
+	{
+		fprintf(stderr, "initGpuShaders_glLinkProgram:");
+		vr::printCompilationError(*program);
+		return false;
+	}
+
+	glValidateProgram(*program);
+	glGetProgramiv(*program, GL_VALIDATE_STATUS, &validate_ok);
+
+	if (!validate_ok)
+	{
+		fprintf(stderr, "initGpuShaders_glValidateProgram:");
+		vr::printCompilationError(*program);
+		return false;
+	}
+
+	return true;
+}
+
+std::shared_ptr<Transform> Application::parseObj(std::shared_ptr<Obj> obj)
 {
 	std::shared_ptr<Transform> n = std::shared_ptr<Transform>(new Transform());
 	n->setName("Transform_" + obj->name);
@@ -241,7 +415,7 @@ std::shared_ptr<Transform> Application::parseObj(std::shared_ptr<Obj> obj, GLuin
 
 	for(int i = 0; i < obj->meshes.size(); i++)
 	{
-		std::shared_ptr<State> geometryState = std::shared_ptr<State>(new State(program));
+		std::shared_ptr<State> geometryState = std::shared_ptr<State>(new State());
 		geometryState->setMaterial(obj->meshes[i].material);
 
 		if(obj->meshes[i].texture != nullptr)
@@ -258,10 +432,7 @@ std::shared_ptr<Transform> Application::parseObj(std::shared_ptr<Obj> obj, GLuin
 
 		g->setName("Geo_"+ obj->name);
 
-		if(!g->init(program))
-		{
-			std::cout << "Could not init " << g->getName() << std::endl;
-		}
+		g->init(m_program);
 
 		std::shared_ptr<Transform> transform = std::shared_ptr<Transform>(new Transform());
 		transform->setInitialTransform(obj->meshes[i].object2world);
@@ -274,6 +445,56 @@ std::shared_ptr<Transform> Application::parseObj(std::shared_ptr<Obj> obj, GLuin
 	return n;
 }
 
+std::shared_ptr<Transform> Application::buildQuad()
+{
+	std::shared_ptr<Transform> transform = std::shared_ptr<Transform>(new Transform());
+	std::shared_ptr<Geometry> geometry = std::shared_ptr<Geometry>(new Geometry());
+
+	geometry->addVertex(0.5f, -0.5f, 0.0f, 1.0f);
+	geometry->addVertex(0.5f,  0.5f, 0.0f, 1.0f);
+	geometry->addVertex(-0.5f,  0.5f, 0.0f, 1.0f);
+	geometry->addVertex(-0.5f, -0.5f, 0.0f, 1.0f);
+
+	glm::vec3 normal = glm::cross(glm::vec3(0.5f, -0.5f, 0.0f) - glm::vec3(0.5f, 0.5f, 0.0f), glm::vec3(0.5f, -0.5f, 0.0f) - glm::vec3(-0.5f, 0.5f, 0.0f));
+
+	geometry->addNormal(normal.x, normal.y, normal.z);
+	geometry->addNormal(normal.x, normal.y, normal.z);
+	geometry->addNormal(normal.x, normal.y, normal.z);
+	geometry->addNormal(normal.x, normal.y, normal.z);
+
+	geometry->addTexCoord(1.0f, 1.0f);
+	geometry->addTexCoord(1.0f, 0.0f);
+	geometry->addTexCoord(0.0f, 0.0f);
+	geometry->addTexCoord(0.0f, 1.0f);
+
+	geometry->addElement(0);
+	geometry->addElement(1);
+	geometry->addElement(3);
+	geometry->addElement(1);
+	geometry->addElement(2);
+	geometry->addElement(3);
+
+	if(!geometry->init(m_program))
+	{
+		std::cerr << "Could not initilize Quad" << std::endl;
+	}
+
+	std::shared_ptr<Texture> texture = std::shared_ptr<Texture>(new Texture());
+	texture->create("textures/tree.png", 0, false);
+
+	transform->setState(std::shared_ptr<State>(new State(m_billboardProgram)));
+	transform->getState()->setTexture(texture, 0);
+
+	transform->getState()->enableAlphaBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	transform->scale(glm::vec3(5, 5, 5));
+	transform->translate(glm::vec3(0, 0.3f, 0));
+
+	transform->addChild(geometry);
+
+	return transform;
+}
+
 std::shared_ptr<Transform> Application::buildSuzanne(std::string model_filename)
 {
 	std::shared_ptr<Obj> obj = loadObj(model_filename);
@@ -283,9 +504,10 @@ std::shared_ptr<Transform> Application::buildSuzanne(std::string model_filename)
 		return nullptr;
 	}
 
-	std::shared_ptr<Transform> transform = parseObj(obj, m_program);
+	std::shared_ptr<Transform> transform = parseObj(obj);
 	transform->setState(std::shared_ptr<State>(new State()));
-	transform->scale(glm::vec3(100, 100, 100));
+	transform->scale(glm::vec3(1, 1, 1));
+	transform->translate(glm::vec3(10, 0, 0));
 	transform->addUpdateCallback(std::shared_ptr<RotateCallback>(new RotateCallback()));
 
 	return transform;
@@ -313,7 +535,7 @@ std::shared_ptr<Transform> Application::buildCow()
 			continue;
 		}
 
-		std::shared_ptr<Transform> transform = parseObj(obj, m_program);
+		std::shared_ptr<Transform> transform = parseObj(obj);
 		transform->setState(std::shared_ptr<State>(new State()));
 		transform->getState()->setPolygonMode(GL_LINE);
 		lod->addChild(transform);
@@ -323,7 +545,9 @@ std::shared_ptr<Transform> Application::buildCow()
 
 	m_rootNode->addUpdateCallback(lod);
 
-	lod->translate(glm::vec3(500, 0, 0));
+	lod->scale(glm::vec3(0.01f, 0.01f, 0.01f));
+
+	lod->translate(glm::vec3(500, -100, 0));
 
 	lod->setName("LOD");
 
@@ -333,7 +557,7 @@ std::shared_ptr<Transform> Application::buildCow()
 std::shared_ptr<Transform> Application::buildCube()
 {
 	std::shared_ptr<Obj> obj = loadObj("models/models/cube_brick.obj");
-	std::shared_ptr<Transform> transform = parseObj(obj, m_program);
+	std::shared_ptr<Transform> transform = parseObj(obj);
 
 	std::shared_ptr<State> state = std::shared_ptr<State>(new State());
 
@@ -343,7 +567,7 @@ std::shared_ptr<Transform> Application::buildCube()
 
 	transform->setState(state);
 
-	transform->scale(glm::vec3(100,100,100));
+	transform->scale(glm::vec3(1,1,1));
 	transform->translate(glm::vec3(-5, 0, 0));
 
 	return transform;
@@ -351,7 +575,7 @@ std::shared_ptr<Transform> Application::buildCube()
 
 std::shared_ptr<Transform> Application::buildPyramid()
 {
-	std::shared_ptr<State> geoState = std::shared_ptr<State>(new State(m_program));
+	std::shared_ptr<State> geoState = std::shared_ptr<State>(new State());
 	std::shared_ptr<Geometry> pyramid(new Geometry(geoState));
 
 	pyramid->addVertex(1.0f, 0.0f, 0.0f, 1.0f);
@@ -399,7 +623,7 @@ std::shared_ptr<Transform> Application::buildPyramid()
 	}
 
 	std::shared_ptr<Transform> trans(new Transform());
-	trans->scale(glm::vec3(100,100,100));
+	trans->scale(glm::vec3(1,1,1));
 	trans->rotate(-(3.14159265359f)/2.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	trans->translate(glm::vec3(-10, 0, 0));
 	trans->addChild(pyramid);
@@ -409,11 +633,11 @@ std::shared_ptr<Transform> Application::buildPyramid()
 
 std::shared_ptr<Transform> Application::buildFloor()
 {
-	std::shared_ptr<State> geoState = std::shared_ptr<State>(new State(m_program));
+	std::shared_ptr<State> geoState = std::shared_ptr<State>(new State());
 	std::shared_ptr<Geometry> ground(new Geometry(geoState));
 
 	BoundingBox box = m_rootNode->calculateBoundingBox();
-	glm::vec3 size = glm::vec3(3000,1500,0);
+	glm::vec3 size = glm::vec3(25,25,0);
 
 	ground->addVertex(size.x, 0, size.y, 1.0);
 	ground->addVertex(size.x, 0, -size.y, 1.0);
@@ -444,16 +668,13 @@ std::shared_ptr<Transform> Application::buildFloor()
 std::shared_ptr<Transform> Application::buildSphere()
 {
 	std::shared_ptr<Obj> obj = loadObj("models/sphere_large.obj");
-	std::shared_ptr<Transform> transform = parseObj(obj, m_toonProgram);
+	std::shared_ptr<Transform> transform = parseObj(obj);
 
 	std::shared_ptr<State> state = std::shared_ptr<State>(new State(m_toonProgram));
-	//std::shared_ptr<Texture> texture = std::shared_ptr<Texture>(new Texture());
-	//texture->create("textures/pexels-anni-roenkae-2832432.jpg", 1);
-	//state->setTexture(texture, 1);
 
 	transform->setState(state);
 
-	transform->scale(glm::vec3(100,100,100));
+	transform->scale(glm::vec3(1,1,1));
 	transform->translate(glm::vec3(-24, 0, 0));
 
 	return transform;
@@ -462,15 +683,14 @@ std::shared_ptr<Transform> Application::buildSphere()
 std::shared_ptr<Transform> Application::buildTree()
 {
 	std::shared_ptr<Obj> obj = loadObj("models/Tree/Tree.obj");
-	std::shared_ptr<Transform> transform = parseObj(obj, m_program);
-	transform->scale(glm::vec3(100,100,100));
+	std::shared_ptr<Transform> transform = parseObj(obj);
+	transform->scale(glm::vec3(1,1,1));
 	return transform;
 }
 
 void Application::buildGeometry(std::string model_filename)
 {
 	m_rootNode->addChild(buildCube());
-	m_rootNode->addChild(buildSphere());
 
 	std::shared_ptr<Transform> parentTransform(new Transform());
 	std::shared_ptr<State> parentState(new State());
@@ -484,15 +704,24 @@ void Application::buildGeometry(std::string model_filename)
 	parentTransform->getState()->add(light2);
 
 	std::shared_ptr<Transform> pyramidTransform = buildPyramid();
+	std::shared_ptr<State> pyramidState(new State());
+	std::shared_ptr<Texture> pyramidTexture(new Texture());
+	pyramidTexture->create("models/House01/House01_Textures/00_MyCust_1.jpg", 0);
+	pyramidState->setTexture(pyramidTexture, 0);
+	pyramidTransform->setState(pyramidState);
+
 	parentTransform->addChild(pyramidTransform);
 	parentTransform->addChild(buildSuzanne(model_filename));
 	m_rootNode->addChild(parentTransform);
+
+
+	m_rootNode->addChild(buildSphere());
 
 	std::shared_ptr<Transform> cowTransform = buildCow();
 	m_rootNode->addChild(cowTransform);
 
 	std::shared_ptr<Transform> instansiationDemoTransform(new Transform());
-	instansiationDemoTransform->scale(glm::vec3(100, 100, 100));
+	instansiationDemoTransform->scale(glm::vec3(1, 1, 1));
 	instansiationDemoTransform->translate(glm::vec3(-15, 0, 0));
 
 	for(auto child : pyramidTransform->getChildren())
@@ -502,21 +731,22 @@ void Application::buildGeometry(std::string model_filename)
 
 	m_rootNode->addChild(instansiationDemoTransform);
 
-	std::shared_ptr<SortedGroup> forest = std::shared_ptr<SortedGroup>(new SortedGroup(m_camera));
+	std::shared_ptr<Transform> floorTransform = buildFloor();
+	m_rootNode->addChild(floorTransform);
+
+	std::shared_ptr<SortedGroup> forest = std::shared_ptr<SortedGroup>(new SortedGroup(m_fpsCamera));
 	std::shared_ptr<State> forestState(new State());
 	forestState->enableAlphaBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	forest->setState(forestState);
 
-	for(int i = 0; i < 10; i++)
+	for(int i = 0; i < 5; i++)
 	{
 		std::shared_ptr<Transform> tree = buildTree();
-		tree->setName("tree" + std::to_string(i));
-		tree->translate(glm::vec3(i * 8, 0, -10));
+		tree->translate(glm::vec3((i * 8) - 25, -1, -10));
 		forest->addChild(tree);
 	}
-	std::shared_ptr<Transform> floorTransform = buildFloor();
-	m_rootNode->addChild(floorTransform);
 
 	m_rootNode->addUpdateCallback(forest);
 	m_rootNode->addChild(forest);
+	m_rootNode->addChild(buildQuad());
 }

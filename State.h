@@ -37,8 +37,6 @@ class State
 		std::shared_ptr<Texture> getTexture(unsigned int slot);
 		std::vector<std::shared_ptr<Texture>> getTextures();
 
-		bool isProgramsMerged();
-
 	private:
 		std::shared_ptr<Material> m_material;
 		GLuint m_program = 0;
@@ -51,6 +49,4 @@ class State
 		GLenum m_alphaBlendingDst = -1;
 
 		std::vector<std::shared_ptr<Texture>> m_textures;
-
-		bool m_isProgramsMerged;
 };

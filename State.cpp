@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vr/glErrorUtil.h>
 
-State::State(GLuint program) : m_uniform_numberOfLights(-1), m_isProgramsMerged(false)
+State::State(GLuint program) : m_uniform_numberOfLights(-1)
 {
 	m_program = program;
 	m_material = std::shared_ptr<Material>(new Material());
@@ -11,7 +11,7 @@ State::State(GLuint program) : m_uniform_numberOfLights(-1), m_isProgramsMerged(
 	m_textures.resize(2);
 }
 
-State::State() : m_uniform_numberOfLights(-1), m_isProgramsMerged(false)
+State::State() : m_uniform_numberOfLights(-1)
 {
 	m_material = std::shared_ptr<Material>(new Material());
 	m_textures.resize(2);
@@ -30,11 +30,6 @@ void State::apply()
 	}
 
 	glUseProgram(m_program);
-
-	if(m_isProgramsMerged)
-	{
-		return;
-	}
 
 	if(m_material)
 	{
@@ -56,7 +51,7 @@ void State::apply()
 
 			if (m_uniform_numberOfLights == -1)
 			{
-				std::cout << "Could not bind uniform " << uniform_name << std::endl;
+				//std::cout << "Could not bind uniform " << uniform_name << std::endl;
 			}
 		}
 
@@ -96,8 +91,6 @@ void State::apply()
 		glEnable(GL_BLEND);
 		glBlendFunc(m_alphaBlendingSrc, m_alphaBlendingDst);
 	}
-
-	m_isProgramsMerged = false;
 }
 
 void State::applyTextures()
@@ -122,8 +115,6 @@ void State::applyTextures()
 	loc = glGetUniformLocation(m_program, "material.textures");
 	glUniform1iv(loc, (GLsizei)slots.size(), slots.data());
 
-	CHECK_GL_ERROR_LINE_FILE();
-
 	loc = glGetUniformLocation(m_program, "material.activeTextures");
 	glUniform1iv(loc, (GLsizei)slotActive.size(), slotActive.data());
 }
@@ -132,11 +123,6 @@ void State::merge(std::shared_ptr<State> state)
 {
 	if(state->getProgram() != 0)
 	{
-		if(m_program != 0 && state->getProgram() != m_program)
-		{
-			m_isProgramsMerged = true;
-		}
-
 		m_program = state->getProgram();
 	}
 
@@ -188,11 +174,6 @@ void State::merge(std::shared_ptr<State> state)
 			}
 		}
 	}
-}
-
-bool State::isProgramsMerged()
-{
-	return m_isProgramsMerged;
 }
 
 void State::enableAlphaBlending(GLenum src, GLenum dst)

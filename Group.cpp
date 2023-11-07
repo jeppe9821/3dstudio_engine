@@ -42,7 +42,20 @@ BoundingBox Group::calculateBoundingBox()
 		box.expand(child->calculateBoundingBox());
 	}
 
+	m_cachedBoundingBox = box;
+	m_hasCachedBoundingBox = true;
+
 	return box;
+}
+
+BoundingBox Group::getCachedBoundingBox()
+{
+	return m_cachedBoundingBox;
+}
+
+bool Group::hasCachedBoundingBox()
+{
+	return m_hasCachedBoundingBox;
 }
 
 std::shared_ptr<Node> Group::removeChildAt(int index)

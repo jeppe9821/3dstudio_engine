@@ -56,6 +56,7 @@ GLFWwindow* initializeWindows(int width, int height)
   if (!glfwInit())
     return nullptr;
 
+
   window = glfwCreateWindow(width, height, "ObjViewer", NULL, NULL);
   if (!window)
   {
@@ -95,7 +96,7 @@ void cleanupWindows(GLFWwindow *window)
 }
 
 
-int main(int argc, char** argv) 
+int main(int argc, char** argv)
 {
   const unsigned SCREEN_WIDTH = 1920;
   const unsigned SCREEN_HEIGHT = 1080;
@@ -123,9 +124,7 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  application->initView();
-
-  //glEnable(GL_DEPTH_TEST);
+  glEnable(GL_DEPTH_TEST);
 
   while (!glfwWindowShouldClose(window))
   {

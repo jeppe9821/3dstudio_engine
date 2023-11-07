@@ -84,7 +84,7 @@ void Material::apply(GLuint program)
 	loc = glGetUniformLocation(program, "material.shininess");
 	glUniform1f(loc, m_shininess);
 
-	CHECK_GL_ERROR_LINE_FILE();
+	//CHECK_GL_ERROR_LINE_FILE();
 }
 
 glm::vec4 Material::getAmbient() const

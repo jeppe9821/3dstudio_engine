@@ -47,6 +47,10 @@ class Group : public Node
         /// <returns>A bounding box</returns>
         virtual BoundingBox calculateBoundingBox() override;
 
+        BoundingBox getCachedBoundingBox();
+
+        bool hasCachedBoundingBox();
+
         /// <summary>
 		/// Removes child at index
 		/// </summary>
@@ -76,4 +80,6 @@ class Group : public Node
 
     private:
         std::vector<std::shared_ptr<Node>> m_children;
+        BoundingBox m_cachedBoundingBox;
+        bool m_hasCachedBoundingBox;
 };

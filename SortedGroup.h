@@ -46,5 +46,5 @@ class SortedGroup : public Transform, public UpdateCallback
     private:
         std::shared_ptr<Camera> m_camera;
         glm::vec3 m_center;
-        bool m_rightOrder;
+        bool m_rightOrder = false;
 };

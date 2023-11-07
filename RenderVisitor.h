@@ -29,8 +29,7 @@ class RenderVisitor : public NodeVisitor
         /// <summary>
         /// Resets the state
         /// </summary>
-        /// <param name="program">program</param>
-        void resetState(GLuint program);
+        void resetState();
 
         /// <summary>
         /// Visits the group node

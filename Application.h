@@ -7,15 +7,20 @@
 #include <sstream>
 
 #include "Light.h"
-#include "Camera.h"
 #include "Group.h"
+#include "OrthographicCamera.h"
+#include "PerspectiveCamera.h"
 #include "FPSCounter.h"
-#include "Camera.h"
 #include "Loader.h"
 #include "RenderVisitor.h"
 #include "UpdateVisitor.h"
+#include "Shadowmap.h"
+#include "RenderToTexture.h"
+#include "GPUParticles.h"
 
 class LightMoveCallback;
+class Skybox;
+class DrawCameraStatus;
 
 /// <summary>
 /// The application
@@ -43,7 +48,7 @@ class Application
         /// <summary>
         /// Initilize the view
         /// </summary>
-        void initView();
+        void initView(std::shared_ptr<Camera> camera);
 
         /// <summary>
         /// Updates the application
@@ -74,16 +79,41 @@ class Application
         std::shared_ptr<RenderVisitor> m_renderVisitor;
         std::shared_ptr<UpdateVisitor> m_updateVisitor;
         std::shared_ptr<FPSCounter> m_fpsCounter;
+        std::shared_ptr<DrawCameraStatus> m_drawCameraStatus;
         std::shared_ptr<Camera> m_camera;
+        std::shared_ptr<Camera> m_fpsCamera;
         std::shared_ptr<LightMoveCallback> m_lightMoveCallback;
+        std::shared_ptr<Shadowmap> m_shadowmap;
+        std::shared_ptr<Skybox> m_skybox;
+        std::shared_ptr<GPUParticles> m_gpuParticles;
 
         std::string m_loadedFilename;
         std::string m_loadedVShader;
         std::string m_loadedFShader;
         glm::uvec2 m_screenSize;
+        bool m_renderShadowmap = true;
+        bool m_renderParticles = false;
+        bool m_wait = false;
+        int m_tick = 0;
 
         GLuint m_program;
         GLuint m_toonProgram;
+        GLuint m_depthProgram;
+        GLuint m_skyboxProgram;
+        GLuint m_billboardProgram;
+
+        //GPU particles
+        GLuint m_gpuProgram;
+        GLuint m_gpuComputeProgram;
+        std::shared_ptr<Texture> particleTex;
+        GLuint vao{};
+        //End of GPU particles
+
+        /// <summary>
+        /// Renders the scene
+        /// </summary>
+        /// <param name="program">The program to render on</param>
+        void render(std::shared_ptr<Camera> camera, GLuint program);
 
         /// <summary>
         /// Initilizes the application shaders for a given program
@@ -94,13 +124,21 @@ class Application
         /// <returns>A flag depending on if the shaders initilized or not</returns>
         bool initShaders(GLuint *program, const std::string& vshader_filename, const std::string& fshader_filename);
 
+        //GPU particles
+        bool initComputeShader(GLuint *program, const std::string& filename);
+        bool initGpuShaders(GLuint *program, const std::string& vshader_filename, const std::string& fshader_filename, const std::string& gshader_filename);
+        //end of GPU particles
+
         /// <summary>
         /// Parses an object file
         /// </summary>
         /// <param name="model_filename">The model to parse</param>
         /// <param name="program">The program to give for the loaded geometry</param>
         /// <returns>The transform for the parsed object</returns>
-        std::shared_ptr<Transform> parseObj(std::shared_ptr<Obj> model_filename, GLuint program);
+        std::shared_ptr<Transform> parseObj(std::shared_ptr<Obj> model_filename);
+
+
+        std::shared_ptr<Transform> buildQuad();
 
         /// <summary>
         /// Builds suzanne (the monkey)

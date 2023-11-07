@@ -27,7 +27,7 @@ void LOD::addChild(std::shared_ptr<Node> child)
     m_radius = b.getRadius();
     m_center = b.getCenter();
     m_levels = m_levels+1;
-    m_distances.push_back(m_radius + (m_levels * 300));
+    m_distances.push_back(135 - m_levels);
 }
 
 void LOD::update(Node &n)
@@ -42,9 +42,10 @@ void LOD::update(Node &n)
 
     for(int i = m_levels-1; i >= 0; i--)
     {
-        if(distance > m_distances[i])
+        std::cout << distance << ", " << m_distances[i] << std::endl;
+        if(distance < m_distances[i])
         {
-            for(int j = 0; j < m_levels; j++)
+            for(int j = m_levels-1; j >= 0; j--)
             {
                 getChild(j)->setEnabled(false);
             }

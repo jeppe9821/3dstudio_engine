@@ -15,7 +15,10 @@ public:
     /// <param name="format"></param>
     /// <param name="pixelType"></param>
     Texture();
-    bool create(const char* image, unsigned int slot=0, GLenum texType = GL_TEXTURE_2D, GLenum pixelType=GL_UNSIGNED_BYTE);
+    bool create(const char* image, unsigned int slot=0, bool flipVertical=true, GLenum texType=GL_TEXTURE_2D, GLenum pixelType=GL_UNSIGNED_BYTE, GLenum texFormat=GL_RGBA, GLint internalFormat=GL_RGBA, bool doDefault=true);
+    bool create(unsigned int slot);
+
+    void setParameteri(GLenum pname, GLint param);
 
     bool isValid();
 
@@ -34,6 +37,8 @@ public:
     void cleanup();
 
     void apply(GLuint program, int i, bool flag);
+
+    unsigned int getId();
 
 private:
     GLuint m_id;

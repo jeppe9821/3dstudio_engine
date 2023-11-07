@@ -1,5 +1,6 @@
 #include <GL/glew.h>
 #include "Camera.h"
+
 #include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/matrix_decompose.hpp>
@@ -32,46 +33,37 @@ Camera::Camera() :
 	m_nearFar = glm::vec2(0.1, 100);
 }
 
-void Camera::setSceneScale(float scale)
+bool Camera::init(GLuint program)
 {
-	m_sceneScale = scale;
-}
+	const char* uniform_name;
+	uniform_name = "v";
+	m_uniform_v = glGetUniformLocation(program, uniform_name);
 
-void Camera::set(glm::vec3 eye, glm::vec3 direction, glm::vec3 up)
-{
-	m_position = eye;
-	m_direction = direction;
-	m_up = up;
+	if (m_uniform_v == -1)
+	{
+		//std::cout << "Could not bind uniform " << uniform_name << std::endl;
+		//return false;
+	}
 
-	m_initialPosition = m_position;
-	m_initialDirection = m_direction;
-}
+	uniform_name = "p";
+	m_uniform_p = glGetUniformLocation(program, uniform_name);
 
-void Camera::setTransform(glm::mat4 transform)
-{
-	glm::vec3 scale, translation, skew;
-	glm::vec4 perspective;
-	glm::quat direction;
-	glm::decompose(transform, scale, direction, translation, skew, perspective);
+	if (m_uniform_p == -1)
+	{
+		//std::cout << "Could not bind uniform " << uniform_name << std::endl;
+		//return false;
+	}
 
-	m_position = translation;
-	m_up = glm::vec3(0, 1, 0) * direction;
-	m_direction = glm::vec3(0.0f, 0.0f, -1.0f) * direction;
-}
+	uniform_name = "v_inv";
+	m_uniform_v_inv = glGetUniformLocation(program, uniform_name);
 
-void Camera::setPosition(glm::vec3 pos)
-{
-	m_position = pos;
-}
+	if (m_uniform_v_inv == -1)
+	{
+		//std::cout << "Could not bind uniform " << uniform_name << std::endl;
+		//return false;
+	}
 
-glm::vec3 Camera::getPosition() const
-{
-	return m_position;
-}
-
-glm::vec3 Camera::getDirection()
-{
-	return m_direction;
+	return true;
 }
 
 void Camera::processInput(GLFWwindow* window)
@@ -160,47 +152,33 @@ void Camera::processInput(GLFWwindow* window)
 	}
 }
 
-glm::uvec2 Camera::getScreenSize()
+void Camera::set(glm::vec3 eye, glm::vec3 direction, glm::vec3 up)
 {
-	return m_screenSize;
+	m_position = eye;
+	m_direction = direction;
+	m_up = up;
+
+	m_initialPosition = m_position;
+	m_initialDirection = m_direction;
 }
 
-void Camera::setScreenSize(const glm::uvec2& size)
+void Camera::setSceneScale(float scale)
 {
-	m_screenSize = size;
+	m_sceneScale = scale;
 }
 
-bool Camera::init(GLuint program)
+void Camera::setTransform(glm::mat4 transform)
 {
-	const char* uniform_name;
-	uniform_name = "v";
-	m_uniform_v = glGetUniformLocation(program, uniform_name);
+	glm::vec3 scale, translation, skew;
+	glm::vec4 perspective;
+	glm::quat direction;
+	glm::decompose(transform, scale, direction, translation, skew, perspective);
 
-	if (m_uniform_v == -1)
-	{
-		std::cerr << "Could not bind uniform " << uniform_name << std::endl;
-		return false;
-	}
+	m_position = translation;
+	m_up = glm::vec3(0, 1, 0) * direction;
+	m_direction = glm::vec3(0.0f, 0.0f, -1.0f) * direction;
 
-	uniform_name = "p";
-	m_uniform_p = glGetUniformLocation(program, uniform_name);
-
-	if (m_uniform_p == -1)
-	{
-		std::cerr << "Could not bind uniform " << uniform_name << std::endl;
-		return false;
-	}
-
-	uniform_name = "v_inv";
-	m_uniform_v_inv = glGetUniformLocation(program, uniform_name);
-
-	if (m_uniform_v_inv == -1)
-	{
-		std::cerr << "Could not bind uniform " << uniform_name << std::endl;
-		return false;
-	}
-
-	return true;
+	m_transform = transform;
 }
 
 void Camera::setNearFar(const glm::vec2& nearFar)
@@ -208,27 +186,97 @@ void Camera::setNearFar(const glm::vec2& nearFar)
 	m_nearFar = nearFar;
 }
 
-void Camera::apply(GLuint program)
-{
-	// Initializes matrices since otherwise they will be the null matrix
-	glm::mat4 view = glm::mat4(1.0f);
-	glm::mat4 projection = glm::mat4(1.0f);
-
-	// Makes camera look in the right direction from the right position
-	view = glm::lookAt(m_position, m_position + m_direction, m_up);
-
-	float aspect = (float)m_screenSize[0] / (float)m_screenSize[1];
-
-	// Adds perspective to the scene
-	projection = glm::perspective(glm::radians(m_fov), aspect, m_nearFar[0], m_nearFar[1]);
-
-	glUniformMatrix4fv(m_uniform_v, 1, GL_FALSE, glm::value_ptr(view));
-	glUniformMatrix4fv(m_uniform_p, 1, GL_FALSE, glm::value_ptr(projection));
-	glm::mat4 v_inv = glm::inverse(view);
-	glUniformMatrix4fv(m_uniform_v_inv, 1, GL_FALSE, glm::value_ptr(v_inv));
-}
-
 void Camera::setFov(float fov)
 {
 	m_fov = fov;
+}
+
+void Camera::setPosition(glm::vec3 pos)
+{
+	m_position = pos;
+}
+
+void Camera::setScreenSize(const glm::uvec2& size)
+{
+	m_screenSize = size;
+}
+
+glm::uvec2 Camera::getScreenSize()
+{
+	return m_screenSize;
+}
+
+glm::vec3 Camera::getPosition() const
+{
+	return m_position;
+}
+
+glm::vec3 Camera::getDirection()
+{
+	return m_direction;
+}
+
+glm::vec3 Camera::getUp()
+{
+	return m_up;
+}
+
+float Camera::getFov()
+{
+	return m_fov;
+}
+
+glm::vec2 Camera::getNearFar()
+{
+	return m_nearFar;
+}
+
+GLint Camera::getViewUniform()
+{
+	return m_uniform_v;
+}
+
+GLint Camera::getProjectionUniform()
+{
+	return m_uniform_p;
+}
+
+GLint Camera::getViewInverseUniform()
+{
+	return m_uniform_v_inv;
+}
+
+glm::mat4 Camera::getTransform()
+{
+	return m_transform;
+}
+
+void Camera::setLightSpaceMatrix(glm::mat4 matrix)
+{
+    m_lightSpaceMatrix = matrix;
+}
+
+glm::mat4 Camera::getLightSpaceMatrix()
+{
+    return m_lightSpaceMatrix;
+}
+
+glm::mat4 Camera::getView()
+{
+	return m_view;
+}
+
+glm::mat4 Camera::getProjection()
+{
+	return m_projection;
+}
+
+void Camera::setView(glm::mat4 view)
+{
+	m_view = view;
+}
+
+void Camera::setProjection(glm::mat4 proj)
+{
+	m_projection = proj;
 }
